@@ -1,0 +1,94 @@
+﻿<Window 
+		x:Class="MultiThreadingBasics.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:MultiThreadingBasics" 
+        x:Name="window"
+        mc:Ignorable="d"
+        Title="MultiThreading Basics" Height="470" Width="800">
+    <Window.Background>
+        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+            <GradientStop Color="#FF141414"/>
+            <GradientStop Color="#FFCBCFD1" Offset="0.894"/>
+        </LinearGradientBrush>
+    </Window.Background>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="80"/>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="306"/>
+        </Grid.RowDefinitions>
+        <Label Content="Concatenate a string 50,000 times" HorizontalAlignment="Left" Margin="200,37,0,0" VerticalAlignment="Top" FontWeight="Bold" FontSize="24"
+               Grid.ColumnSpan="2" Grid.Column="0" Foreground="#FFE3850A"/>
+        <Label Content="String" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold" FontSize="24" Grid.Row="1" Foreground="#FF0498FB"/>
+        <Label Content="StringBuilder" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold" FontSize="24" Grid.Row="1" Foreground="#FF08ED0F" Grid.Column="1"/>
+        <TextBox x:Name="txb_String_RAM" HorizontalAlignment="Left" Margin="122,44,0,0" Grid.Row="2" TextWrapping="Wrap" VerticalAlignment="Top" Width="203" Height="37" FontSize="20" RenderTransformOrigin="0.5,0.5" TextAlignment="Center" Text="{Binding MemoryUsed1, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N2}}" IsReadOnly="True">
+            <TextBox.Background>
+                <LinearGradientBrush EndPoint="0.5,0" StartPoint="0.5,0">
+                    <LinearGradientBrush.RelativeTransform>
+                        <TransformGroup>
+                            <ScaleTransform CenterY="0.5" CenterX="0.5"/>
+                            <SkewTransform CenterX="0.5" CenterY="0.5"/>
+                            <RotateTransform Angle="-90" CenterX="0.5" CenterY="0.5"/>
+                            <TranslateTransform/>
+                        </TransformGroup>
+                    </LinearGradientBrush.RelativeTransform>
+                    <GradientStop Color="#FFE92121" Offset="0"/>
+                    <GradientStop Color="White" Offset="0"/>
+                </LinearGradientBrush>
+            </TextBox.Background>
+        </TextBox>
+        <TextBox x:Name="txb_StringBuilder_RAM" HorizontalAlignment="Left" Grid.Row="2" TextWrapping="Wrap" VerticalAlignment="Top" Width="204" Height="37" FontSize="20" Grid.Column="1" Margin="140,44,0,0" TextAlignment="Center" Text="{Binding MemoryUsed2, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N2}}" IsReadOnly="True">
+            <TextBox.Background>
+                <LinearGradientBrush EndPoint="0.5,0" StartPoint="0.5,0">
+                    <LinearGradientBrush.RelativeTransform>
+                        <TransformGroup>
+                            <ScaleTransform CenterY="0.5" CenterX="0.5"/>
+                            <SkewTransform CenterX="0.5" CenterY="0.5"/>
+                            <RotateTransform Angle="-90" CenterX="0.5" CenterY="0.5"/>
+                            <TranslateTransform/>
+                        </TransformGroup>
+                    </LinearGradientBrush.RelativeTransform>
+                    <GradientStop Color="#FFE92121" Offset="0"/>
+                    <GradientStop Color="White" Offset="0"/>
+                </LinearGradientBrush>
+            </TextBox.Background>
+        </TextBox>
+        <Button x:Name="btn_Go" Content="Go" HorizontalAlignment="Left" Margin="284,10,0,0" VerticalAlignment="Top" Height="74" Width="83" FontWeight="Bold" FontSize="36"  Grid.Column="1" Background="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}" Foreground="#FFE3850A" Grid.RowSpan="2" BorderThickness="1,1,1,0" BorderBrush="#FFE3850A" Click="btn_Go_Click">
+            <Button.Resources>
+                <Style TargetType="{x:Type Border}">
+                    <Setter Property="CornerRadius" Value="50"/>
+                </Style>
+            </Button.Resources>
+        </Button>
+        <TextBox x:Name="txb_String_Count" HorizontalAlignment="Left" Margin="22,44,0,0" Grid.Row="2" TextWrapping="Wrap" Text="{Binding Count1, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N0}}" VerticalAlignment="Top" Width="87" Height="37" FontSize="20" TextAlignment="Center" IsReadOnly="True"/>
+        <TextBox x:Name="txb_StringBuilder_Count" HorizontalAlignment="Left" Margin="38,44,0,0" Grid.Row="2" TextWrapping="Wrap" Text="{Binding Count2, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N0}}" VerticalAlignment="Top" Width="87" Height="37" FontSize="20" Grid.Column="1" TextAlignment="Center" IsReadOnly="True"/>
+        <Label Content="Laps" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="16" Grid.Row="2" Foreground="{DynamicResource {x:Static SystemColors.HighlightTextBrushKey}}" Margin="35,10,0,0" Width="61"/>
+        <Label Content="Memory consumed (cumulated)" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="16" Grid.Row="2" Foreground="{DynamicResource {x:Static SystemColors.HighlightTextBrushKey}}" Margin="122,8,0,0" Width="238"/>
+        <Label Content="Memory consumed (cumulated)" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="16" Grid.Row="2" Foreground="{DynamicResource {x:Static SystemColors.HighlightTextBrushKey}}" Margin="140,8,0,0" Width="238" Grid.Column="1"/>
+        <Label Content="Laps" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="16" Grid.Row="2" Foreground="{DynamicResource {x:Static SystemColors.HighlightTextBrushKey}}" Margin="51,13,0,0" Width="61" Grid.Column="1"/>
+        <Label Content="MB" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="16" Grid.Row="2" Foreground="{DynamicResource {x:Static SystemColors.HighlightTextBrushKey}}" Margin="331,47,0,0" Width="42" FontWeight="Bold"/>
+        <Label Content="MB" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="16" Grid.Row="2" Foreground="{DynamicResource {x:Static SystemColors.HighlightTextBrushKey}}" Margin="349,47,0,0" Width="42" FontWeight="Bold" Grid.Column="1"/>
+        <TextBox x:Name="txb_String_Result" HorizontalAlignment="Left" Margin="22,153,0,0" Grid.Row="2" TextWrapping="Wrap" VerticalAlignment="Top" Width="334" Height="134" FontSize="20" VerticalScrollBarVisibility="Visible" Text="{Binding String1, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True"/>
+        <TextBox x:Name="txb_StringBuilder_Result" HorizontalAlignment="Left" Margin="44,156,0,0" Grid.Row="2" TextWrapping="Wrap" VerticalAlignment="Top" Width="334" Height="134" FontSize="20" Grid.Column="1" VerticalScrollBarVisibility="Visible" Text="{Binding String2, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True"/>
+        <TextBox x:Name="txb_String_Time" HorizontalAlignment="Left" Margin="121,86,0,0" Grid.Row="2" TextWrapping="Wrap" Text="{Binding TimeUsed1, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:c}}" VerticalAlignment="Top" Width="203" Height="37" FontSize="20" TextAlignment="Center" IsReadOnly="True"/>
+        <Label Content="Time elapsed" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="16" Grid.Row="2" Foreground="{DynamicResource {x:Static SystemColors.HighlightTextBrushKey}}" Margin="20,89,0,0" Width="101"/>
+        <Label Content="sec." HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="16" Grid.Row="2" Foreground="{DynamicResource {x:Static SystemColors.HighlightTextBrushKey}}" Margin="331,89,0,0" Width="42" FontWeight="Bold"/>
+        <TextBox x:Name="txb_StringBuilder_Time" HorizontalAlignment="Left" Margin="140,86,0,0" Grid.Row="2" TextWrapping="Wrap" Text="{Binding TimeUsed2, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:c}}" VerticalAlignment="Top" Width="203" Height="37" FontSize="20" Grid.Column="1" TextAlignment="Center" IsReadOnly="True"/>
+        <Label Content="Time elapsed" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="16" Grid.Row="2" Foreground="{DynamicResource {x:Static SystemColors.HighlightTextBrushKey}}" Margin="38,86,0,0" Width="101" Grid.Column="1"/>
+        <Label Content="sec." HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="16" Grid.Row="2" Foreground="{DynamicResource {x:Static SystemColors.HighlightTextBrushKey}}" Margin="349,86,0,0" Width="42" FontWeight="Bold" Grid.Column="1"/>
+        <Label Content="Result" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="16" Grid.Row="2" Foreground="#FFF7C706" Margin="22,121,0,0" Width="61" FontWeight="Bold"/>
+        <Label Content="Result" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="16" Grid.Row="2" Foreground="#FFF7C706" Margin="38,123,0,0" Width="61" Grid.Column="1" FontWeight="Bold"/>
+        <Label x:Name="lbl_String_Length" Content="{Binding String1.Length, UpdateSourceTrigger=PropertyChanged}" ContentStringFormat="Total {0:N0} chars" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="16" Grid.Row="2" Foreground="#FFF7C706" Margin="83,123,0,0" Width="201" Height="31"/>
+        <Label x:Name="lbl_StringBuilder_Length" Content="{Binding String2.Length, UpdateSourceTrigger=PropertyChanged}" ContentStringFormat="Total {0:N0} chars" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="16" Grid.Row="2" Foreground="#FFF7C706" Margin="0,123,0,0" Width="193" Grid.Column="1" Height="28"/>
+        <Label x:Name="lbl_TaskName" Content="MultiThreading Test" HorizontalAlignment="Left" Margin="282,0,0,0" VerticalAlignment="Top" FontWeight="Bold" FontSize="24"
+            Grid.ColumnSpan="2" Grid.Column="0" Foreground="#FFF7DF0A"/>
+
+    </Grid>
+</Window>

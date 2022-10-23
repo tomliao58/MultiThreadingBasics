@@ -1,0 +1,18 @@
+﻿<Window x:Class="StartupApp.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:StartupApp"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="187" Width="188" Background="#00000000" WindowStyle="None" WindowStartupLocation="CenterScreen" AllowsTransparency="True">
+    <Grid HorizontalAlignment="Center" VerticalAlignment="Center" Height="147" Width="143">
+        <Button x:Name="btn_Go" Content="Go" HorizontalAlignment="Center" VerticalAlignment="Center" Height="114" Width="113" FontWeight="Bold" FontSize="72" Foreground="#FFFBA704" BorderThickness="2,2,2,2" BorderBrush="#FFF5AE02" Click="btn_Go_Click" AutomationProperties.HelpText="Run 4 Apps in parallel." Background="#FFE3330A">
+            <Button.Resources>
+                <Style TargetType="{x:Type Border}">
+                    <Setter Property="CornerRadius" Value="60"/>
+                </Style>
+            </Button.Resources>
+        </Button>
+    </Grid>
+</Window>
